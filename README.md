@@ -18,6 +18,8 @@ yarn
 $ yarn run start:dev
 ```
 
+You can see the Swagger Docs on **"http://\<YOUR HOST HERE\>:\<YOUR PORT HERE\>/api"** link.
+
 ## Test
 
 ```bash
