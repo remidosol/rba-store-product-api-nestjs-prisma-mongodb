@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DEV_DATABASE_URL")
+}
+
+enum Roles {
+  USER
+  STORE_MANAGER
+  GLOBAL_ADMIN
+}
+
+model User {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String @unique
+  password  String
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
+
+  Store Store[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  UserRole  Role?
+
+  @@map("users")
+}
+
+model Role {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      Roles    @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId String @unique @map("user_id") @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("roles")
+}
+
+model Store {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId String @map("user_id") @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  products Product[]
+
+  @@map("stores")
+}
+
+model Product {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  price    Float   @default(0.00)
+  imageUrl String? @map("image_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  storeId String @map("store_id") @db.ObjectId
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@map("products")
+}
