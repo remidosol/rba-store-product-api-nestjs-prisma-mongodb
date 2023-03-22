@@ -2,6 +2,7 @@
 # A NestJS demo project
 
 This repository contains a demo NestJS project which have the tech stack that includes NestJS, Prisma, MongoDB, Jest and Swagger.
+This project will include unit, integration tests and Docker as well. _(Pending)_
 
 A detailed README.md will come soon.
 
