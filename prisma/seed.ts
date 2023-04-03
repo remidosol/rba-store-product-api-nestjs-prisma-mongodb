@@ -87,9 +87,8 @@ async function main() {
 
   const fakeUsers: User[] = []
 
-  //! CREATE 20 DUMMY USER BINDED WITH PROFILE/PRACTICE GOAL/LANGUAGE/COUNTRY/TOPIC/ROLE
+  //! CREATE 15 DUMMY USER
   for (let i = 0; i < 15; i++) {
-    //! USER PROFILE
     const gender: 'male' | 'female' =
       faker.name.sex() === 'male' ? 'male' : 'female'
 
